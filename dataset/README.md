@@ -1,11 +1,12 @@
 # Dataset
 
-Place your own authorized face images in this folder.
+This folder is used to store the face images required for the attendance system.
 
-Create a separate folder for each person.
+Create a separate folder for each registered person.
 
-Example:
+### Folder Structure
 
+```text
 dataset/
 ├── Person1/
 │   ├── image1.jpg
@@ -15,5 +16,3 @@ dataset/
 ├── Person2/
 │   ├── image1.jpg
 │   └── image2.jpg
-
-Do not upload private face images or personal biometric data to a public repository.
