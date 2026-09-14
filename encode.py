@@ -9,16 +9,13 @@ known_names = []
 dataset_path = "dataset"
 
 def preprocess(img):
-    # Resize (helps detection)
+    
     img = cv2.resize(img, None, fx=0.5, fy=0.5)
 
-    # Convert to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Improve contrast
     gray = cv2.equalizeHist(gray)
-
-    # Convert back to RGB
+    
     return cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
 
 for person in os.listdir(dataset_path):
@@ -41,7 +38,6 @@ for person in os.listdir(dataset_path):
 
             found = False
 
-            # Try multiple preprocessing + rotations
             for angle in [0, 90, 180, 270]:
                 if angle != 0:
                     rotated = cv2.rotate(img, {
@@ -54,10 +50,8 @@ for person in os.listdir(dataset_path):
 
                 processed = preprocess(rotated)
 
-                # Try HOG model first (fast)
                 face_locations = face_recognition.face_locations(processed)
 
-                # If not found → try CNN model (strong)
                 if not face_locations:
                     face_locations = face_recognition.face_locations(processed, model="cnn")
 
@@ -75,7 +69,6 @@ for person in os.listdir(dataset_path):
         except Exception as e:
             print(f"Error in {img_name}: {e}")
 
-# Save encodings
 with open("encodings.pkl", "wb") as f:
     pickle.dump((known_faces, known_names), f)
 
